@@ -201,14 +201,17 @@ class GenerateCommandController extends CommandController {
      * @param string $suffix (optional) The suffix of the fusion file
      * @param bool $force (optional) Force overriding of existing files
      */
-    public function fusionCommand(string $configType, string $name, string $packageKey = '' ,bool $subFolder = false ,string $extends = '' ,string $nameAppendix = '', string $suffix = '.fusion', bool $force = false) {
+    public function fusionCommand(string $configType, string $name, string $packageKey = '' ,bool $subFolder = false ,string $extends = '' ,string $nameAppendix = '', string $suffix = '', bool $force = false) {
         $packageKey = $this->resolvePackageKey($packageKey);
         $dynamicConfig = call_user_func([$this, 'get' . $configType . 'Config']);
 
         $targetPath = (isset($dynamicConfig['fusion']['targetPath'])) ? $dynamicConfig['fusion']['targetPath'] : '';
         $templatePath = (isset($dynamicConfig['fusion']['templatePath'])) ? $dynamicConfig['fusion']['templatePath'] : 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Fusion';
         $nameAppendixFromConfig = (isset($dynamicConfig['fusion']['nameAppendix'])) ? $dynamicConfig['fusion']['nameAppendix'] : '';
-        $nameAppendix = ($nameAppendix == '') ? $nameAppendixFromConfig : $nameAppendix;
+        $nameAppendix = ($nameAppendix === '') ? $nameAppendixFromConfig : $nameAppendix;
+        
+        $suffixFromConfig = (isset($dynamicConfig['fusion']['suffix'])) ? $dynamicConfig['fusion']['suffix'] : '';
+        $suffix = ($suffix === '') ? $suffixFromConfig : $suffix;
 
         $this->generatorService->generateFusion($name, $packageKey, $targetPath, $subFolder, $nameAppendix, $suffix, $templatePath, $extends, $force);
 
@@ -228,12 +231,14 @@ class GenerateCommandController extends CommandController {
      * @param string $suffix
      * @param bool $force
      */
-    public function templateCommand(string $configType, string $name, string $packageKey = '', bool $subFolder = false , string $suffix = '.html', bool $force = false) {
+    public function templateCommand(string $configType, string $name, string $packageKey = '', bool $subFolder = false , string $suffix = '', bool $force = false) {
         $packageKey = $this->resolvePackageKey($packageKey);
         $dynamicConfig = call_user_func([$this, 'get' . $configType . 'Config']);
 
         $targetPath = (isset($dynamicConfig['template']['targetPath'])) ? $dynamicConfig['template']['targetPath'] : '';
         $templatePath = (isset($dynamicConfig['template']['templatePath'])) ? $dynamicConfig['template']['templatePath'] : 'resource://Vectoholic.NeosCli/Private/Templates/Generator/View';
+        $suffixFromConfig = (isset($dynamicConfig['template']['suffix'])) ? $dynamicConfig['template']['suffix'] : '';
+        $suffix = ($suffix === '') ? $suffixFromConfig : $suffix;
         $this->generatorService->generateTemplate($name, $packageKey, $targetPath, $subFolder, $suffix, $templatePath, $force);
         $calledFrom = debug_backtrace()[1]['function'];
         $hideStatus = ($calledFrom == 'nodeTypeCommand' || $calledFrom == 'componentCommand') ? true : false;
@@ -252,13 +257,15 @@ class GenerateCommandController extends CommandController {
      * @param string $suffix
      * @param bool $force
      */
-    public function javascriptCommand(string $configType, string $name, string $packageKey = '', bool $subFolder = false ,$suffix = '.js', bool $force = false) {
+    public function javascriptCommand(string $configType, string $name, string $packageKey = '', bool $subFolder = false ,$suffix = '', bool $force = false) {
         $packageKey = $this->resolvePackageKey($packageKey);
 
         $dynamicConfig = call_user_func([$this, 'get' . $configType . 'Config']);
 
         $targetPath = (isset($dynamicConfig['javascript']['targetPath'])) ? $dynamicConfig['javascript']['targetPath'] : '';
         $templatePath = (isset($this->nodeTypeConfig['javascript']['templatePath'])) ? $this->nodeTypeConfig['javascript']['templatePath'] : 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Assets';
+        $suffixFromConfig = (isset($dynamicConfig['javascript']['suffix'])) ? $dynamicConfig['javascript']['suffix'] : '';
+        $suffix = ($suffix === '') ? $suffixFromConfig : $suffix;
         $this->generatorService->generateJavascript($name, $packageKey, $targetPath, $subFolder, $suffix, $templatePath, $force);
 
         $calledFrom = debug_backtrace()[1]['function'];
@@ -283,6 +290,8 @@ class GenerateCommandController extends CommandController {
 
         $targetPath = (isset($dynamicConfig['styles']['targetPath'])) ? $dynamicConfig['styles']['targetPath'] : '';
         $templatePath = (isset($dynamicConfig['styles']['templatePath'])) ? $dynamicConfig['styles']['templatePath'] : 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Assets';
+        $suffixFromConfig = (isset($dynamicConfig['styles']['suffix'])) ? $dynamicConfig['styles']['suffix'] : '';
+        $suffix = ($suffix === '') ? $suffixFromConfig : $suffix;
         $this->generatorService->generateStylesheet($name, $packageKey, $targetPath, $subFolder, $suffix, $templatePath, $force);
 
         $calledFrom = debug_backtrace()[1]['function'];
@@ -311,6 +320,8 @@ class GenerateCommandController extends CommandController {
         $targetPathFromConfig = (isset($dynamicConfig['translation']['targetPath'])) ? $dynamicConfig['translation']['targetPath'] : '';
         $targetPath = ($targetPath == '') ? $targetPathFromConfig : $targetPath;
         $templatePath = (isset($dynamicConfig['translation']['templatePath'])) ? $dynamicConfig['translation']['templatePath'] : 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Assets';
+        $suffixFromConfig = (isset($dynamicConfig['translation']['suffix'])) ? $dynamicConfig['translation']['suffix'] : '';
+        $suffix = ($suffix === '') ? $suffixFromConfig : $suffix;
         $this->generatorService->generateTranslation($name, $packageKey, $sourceLanguageKey, $targetLanguageKeys, $templatePath, $targetPath, $suffix);
 
         $calledFrom = debug_backtrace()[1]['function'];
