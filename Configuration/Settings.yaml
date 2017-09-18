@@ -46,7 +46,7 @@ Vectoholic:
       styles:
         targetPath: 'Private/Assets/Styles'
         templatePath: 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Assets'
-        suffix: '.scss'
+        suffix: '.css'
         autoGenerate: true
       translation:
         ## Define a path inside the Resource/Private/Translations/{language}/ folder. Keep in mind
