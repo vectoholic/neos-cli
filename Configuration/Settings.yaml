@@ -1,0 +1,92 @@
+Vectoholic:
+  NeosCli:
+    ## Define a specific package where your files sould be generated into.
+    ## If not defined the system looks for the last package in the loading order
+    ## which normally is a site package. You can also define the package via the
+    ## command line, but this has to be done every time you call the action.
+    packageKey: ~
+    ## Define source- and target languages in here using country codes
+    ## like de, en, en_us, etc. The first code is the sourcelanguage and
+    ## the foloowing are the targetlanguages.
+    languages: []
+    nodeType:
+      ## Whether to put the generated files into an folder
+      ## or not. The folder name will be same like the nodeType.
+      subFolder: false
+      ## Add as many superTypes that are added to the generated yaml file.
+      ## Seperate every superType with an comme without whitespace.
+      defaultContentNodeType: Neos.Neos:Content
+      defaultDocumentNodeType: Neos.Neos:Document
+      ## The generator prepends this values in the filename depending if its
+      ## a content or document nodetype eg. NodeTypes.Content.Name.yaml.
+      ## Disable this by setting nodeTypeNamePrefix to false
+      nodeTypeNamePrefix:
+        contentNodeTypes: Content
+        documentNodeTypes: Document
+      fusion:
+        ## Fusion files need to be placed inside the Resources/Private/Fusion folder
+        ## by convention. You can specify a subfolder (eg. NodeTypes) to seperate files.
+        targetPath: 'NodeTypes'
+        templatePath: 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Fusion'
+        nameAppendix: ''
+        suffix: '.fusion'
+        autoGenerate: true
+      template:
+        ## Templates have to be inside the Resources/Private folder. By default nodeType templates
+        ## reside in 'Resources/Private/Templates/NodeTypes'. Keep that in mind when you change settings.
+        targetPath: 'Templates/NodeTypes'
+        templatePath: 'resource://Vectoholic.NeosCli/Private/Templates/Generator/View'
+        suffix: '.html'
+        autoGenerate: true
+      javascript:
+        targetPath: 'Private/Assets/Javascript'
+        templatePath: 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Assets'
+        suffix: '.js'
+        autoGenerate: true
+      styles:
+        targetPath: 'Private/Assets/Styles'
+        templatePath: 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Assets'
+        suffix: '.scss'
+        autoGenerate: true
+      translation:
+        ## Define a path inside the Resource/Private/Translations/{language}/ folder. Keep in mind
+        ## that the nodetype translations has to be inside the NodeTypes folder.
+        targetPath: 'NodeTypes'
+        templatePath: 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Translations'
+        suffix: '.xlf'
+        autoGenerate: true
+    component:
+      ## Whether to put the generated files into an folder
+      ## or not. The folder name will be same like the component.
+      subFolder: false
+      fusion:
+        targetPath: 'Components'
+        ## If you you want the generated fusion prototype to extend from
+        ## a certain fusion prototype define it here.
+        defaultPrototype: 'Neos.Fusion:Template'
+        templatePath: 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Fusion'
+        ## The nameAppenix will be added to ne file- and the prototypename
+        nameAppendix: ''
+        suffix: '.fusion'
+        autoGenerate: true
+         ## Templates have to be inside the Resources/Private folder.
+      template:
+        targetPath: 'Templates/Components'
+        templatePath: 'resource://Vectoholic.NeosCli/Private/Templates/Generator/View'
+        suffix: '.html'
+        autoGenerate: true
+      javascript:
+        targetPath: 'Private/Assets/Javascript'
+        templatePath: 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Assets'
+        suffix: '.js'
+        autoGenerate: true
+      styles:
+        targetPath: 'Private/Assets/Styles'
+        templatePath: 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Assets'
+        suffix: '.css'
+        autoGenerate: true
+      translation:
+        targetPath: 'Components'
+        templatePath: 'resource://Vectoholic.NeosCli/Private/Templates/Generator/Translations'
+        suffix: '.xlf'
+        autoGenerate: true

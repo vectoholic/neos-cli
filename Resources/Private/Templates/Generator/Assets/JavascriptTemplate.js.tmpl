@@ -1,0 +1,10 @@
+$(document).ready(function () {
+  if ($('body').hasClass('neos-backend')) {
+    //...define function
+    $('body').on('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd', function(event) {
+      if (event.target.localName == 'body') {
+        //...call function
+      }
+    });
+  }
+});
